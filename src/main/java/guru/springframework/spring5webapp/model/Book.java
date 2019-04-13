@@ -8,30 +8,24 @@ import java.util.Set;
 @Entity
 public class Book {
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return Objects.equals(id, book.id);
-    }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
+
+    public Book(Long id, String title, String isbn, Publisher publisher, Set<Author> authors) {
+        this.id = id;
+        this.title = title;
+        this.isbn = isbn;
+        this.publisher = publisher;
+        this.authors = authors;
+    }
+
+    public Book() {
+    }
+
     private String isbn;
 
     @OneToOne
@@ -51,6 +45,24 @@ public class Book {
         this.title = title;
         this.isbn = isbn;
         this.publisher = publisher;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", publisher=" + publisher +
+                ", authors=" + authors +
+                '}';
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -84,4 +96,20 @@ public class Book {
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id);
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }
+
